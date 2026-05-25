@@ -1,0 +1,1780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nihonnoculture — Japan's Past, Present & Future</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700;900&family=Shippori+Mincho:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --crimson: #C8102E;
+    --deep-red: #8B0000;
+    --gold: #D4AF37;
+    --pale-gold: #F5DEB3;
+    --ink: #0A0A14;
+    --deep-navy: #050510;
+    --mid-navy: #0D0D28;
+    --star-white: #E8F0FF;
+    --muted: #8899BB;
+    --soft-white: #F0F4FF;
+    --neon-teal: #00FFD1;
+    --neon-pink: #FF3FA4;
+    --neon-blue: #3FA4FF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--deep-navy);
+    color: var(--soft-white);
+    font-family: 'Space Mono', monospace;
+    overflow-x: hidden;
+  }
+
+  /* ── STARFIELD ── */
+  #starfield {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: white;
+    animation: twinkle var(--dur, 3s) ease-in-out infinite var(--delay, 0s);
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: var(--min-op, 0.2); transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.4); }
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+    background: rgba(5,5,16,0.7);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,16,46,0.25);
+  }
+
+  .nav-logo {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--crimson);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  .flag-icon {
+    width: 32px;
+    height: 22px;
+    background: white;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .flag-icon .circle {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--crimson);
+  }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    z-index: 1;
+  }
+
+  .kanji-watermark {
+    position: absolute;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 30vw;
+    font-weight: 900;
+    color: rgba(200,16,46,0.04);
+    pointer-events: none;
+    user-select: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+  }
+
+  .hero-tagline {
+    font-size: 0.72rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    animation: fadeUp 1s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(3rem, 10vw, 7rem);
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, #fff 0%, var(--gold) 40%, var(--crimson) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeUp 1s ease 0.2s both;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-subtitle-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1rem, 3vw, 1.6rem);
+    color: rgba(200,16,46,0.7);
+    font-weight: 300;
+    animation: fadeUp 1s ease 0.4s both;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-desc {
+    font-size: 0.82rem;
+    line-height: 2;
+    max-width: 600px;
+    color: var(--muted);
+    animation: fadeUp 1s ease 0.6s both;
+    margin-bottom: 3rem;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    animation: fadeUp 1s ease 0.8s both;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    padding: 0.8rem 2.2rem;
+    background: var(--crimson);
+    color: white;
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.15);
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+  }
+  .btn-primary:hover::after { transform: translateX(0); }
+
+  .btn-outline {
+    padding: 0.8rem 2.2rem;
+    background: transparent;
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: 1px solid var(--gold);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .btn-outline:hover { background: rgba(212,175,55,0.1); }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    animation: fadeUp 1s ease 1.2s both;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--crimson), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+    50% { opacity: 1; transform: scaleY(1); }
+    100% { opacity: 0; transform: scaleY(1); transform-origin: bottom; }
+  }
+  .scroll-text {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION BASE ── */
+  section {
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-header {
+    text-align: center;
+    padding: 6rem 2rem 3rem;
+  }
+
+  .section-kicker {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--crimson);
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: var(--soft-white);
+    margin-bottom: 1rem;
+  }
+
+  .section-line {
+    width: 60px;
+    height: 2px;
+    background: var(--crimson);
+    margin: 0 auto 1.5rem;
+  }
+
+  .section-intro {
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 0.85rem;
+    line-height: 2;
+    color: var(--muted);
+  }
+
+  /* ── MAP SECTION ── */
+  #map-section {
+    background: linear-gradient(to bottom, var(--deep-navy), var(--mid-navy));
+    padding: 0 2rem 6rem;
+  }
+
+  .map-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .map-visual {
+    position: relative;
+  }
+
+  .japan-map-svg {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .prefecture-btn {
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .prefecture-btn:hover ellipse,
+  .prefecture-btn:hover rect {
+    opacity: 1;
+    filter: drop-shadow(0 0 8px var(--crimson));
+  }
+
+  .prefecture-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .prefecture-card {
+    padding: 1.5rem;
+    border: 1px solid rgba(200,16,46,0.2);
+    background: rgba(200,16,46,0.04);
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .prefecture-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--crimson);
+    transform: scaleY(0);
+    transition: transform 0.3s;
+    transform-origin: bottom;
+  }
+  .prefecture-card:hover,
+  .prefecture-card.active {
+    border-color: rgba(200,16,46,0.5);
+    background: rgba(200,16,46,0.08);
+  }
+  .prefecture-card:hover::before,
+  .prefecture-card.active::before {
+    transform: scaleY(1);
+  }
+
+  .pref-name {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--soft-white);
+    margin-bottom: 0.3rem;
+  }
+  .pref-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.75rem;
+    color: var(--crimson);
+    margin-bottom: 0.8rem;
+    opacity: 0.8;
+  }
+  .pref-desc {
+    font-size: 0.78rem;
+    line-height: 1.9;
+    color: var(--muted);
+    display: none;
+  }
+  .prefecture-card.active .pref-desc { display: block; }
+
+  .pref-tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-top: 0.8rem;
+  }
+  .pref-tag {
+    font-size: 0.6rem;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid rgba(212,175,55,0.3);
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── CULTURE GRID ── */
+  #culture {
+    background: var(--deep-navy);
+    padding: 0 2rem 6rem;
+  }
+
+  .culture-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+  }
+
+  .culture-cell {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--mid-navy);
+  }
+
+  .culture-cell:first-child { grid-column: span 2; aspect-ratio: 2/1; }
+
+  .culture-bg {
+    position: absolute;
+    inset: 0;
+    font-size: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.12;
+    transition: opacity 0.4s, transform 0.4s;
+    font-family: 'Noto Serif JP', serif;
+  }
+
+  .culture-cell:hover .culture-bg { opacity: 0.25; transform: scale(1.1); }
+
+  .culture-content {
+    position: absolute;
+    inset: 0;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: linear-gradient(to top, rgba(5,5,16,0.85) 0%, transparent 60%);
+    transition: background 0.4s;
+  }
+
+  .culture-cell:hover .culture-content {
+    background: linear-gradient(to top, rgba(5,5,16,0.95) 0%, rgba(5,5,16,0.4) 100%);
+  }
+
+  .culture-tag {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid;
+    display: inline-block;
+    margin-bottom: 0.6rem;
+    width: fit-content;
+  }
+
+  .tag-red { border-color: var(--crimson); color: var(--crimson); }
+  .tag-blue { border-color: var(--neon-blue); color: var(--neon-blue); }
+  .tag-green { border-color: #4ECDC4; color: #4ECDC4; }
+  .tag-purple { border-color: #B565FF; color: #B565FF; }
+
+  .culture-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.4rem;
+  }
+
+  .culture-text {
+    font-size: 0.74rem;
+    line-height: 1.8;
+    color: var(--muted);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+  }
+
+  .culture-cell:hover .culture-text { max-height: 200px; }
+
+  /* ── FESTIVALS ── */
+  #festivals {
+    background: linear-gradient(to bottom, var(--deep-navy), #0A0518);
+    padding: 0 2rem 6rem;
+  }
+
+  .festival-timeline {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    padding-left: 3rem;
+  }
+
+  .festival-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--crimson), transparent);
+  }
+
+  .festival-item {
+    position: relative;
+    padding: 2rem 0 2rem 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .festival-item::before {
+    content: '';
+    position: absolute;
+    left: -3.5rem;
+    top: 2.3rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--crimson);
+    box-shadow: 0 0 12px var(--crimson);
+  }
+
+  .festival-month {
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--crimson);
+    margin-bottom: 0.5rem;
+  }
+
+  .festival-name {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.3rem;
+  }
+
+  .festival-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.1rem;
+    color: rgba(212,175,55,0.6);
+    margin-bottom: 0.8rem;
+  }
+
+  .festival-desc {
+    font-size: 0.82rem;
+    line-height: 2;
+    color: var(--muted);
+    max-width: 700px;
+  }
+
+  /* ── FUTURE TECH ── */
+  #future {
+    background: #050510;
+    padding: 0 2rem 6rem;
+    overflow: hidden;
+  }
+
+  .future-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .future-card {
+    padding: 3rem 2.5rem;
+    background: var(--deep-navy);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s;
+  }
+
+  .future-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glow-color, rgba(0,255,209,0.03));
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .future-card:hover { background: rgba(0,10,30,1); }
+  .future-card:hover::after { opacity: 1; }
+
+  .future-icon {
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
+    display: block;
+    font-family: 'Noto Serif JP', serif;
+  }
+
+  .future-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.8rem;
+  }
+
+  .future-desc {
+    font-size: 0.8rem;
+    line-height: 2;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .future-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .future-num {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--neon-teal);
+    line-height: 1;
+  }
+
+  .future-label {
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ── OTAKU ── */
+  #otaku {
+    background: linear-gradient(135deg, #050510 0%, #0D0520 50%, #050510 100%);
+    padding: 0 2rem 6rem;
+  }
+
+  .otaku-showcase {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .otaku-text h3 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .otaku-text p {
+    font-size: 0.82rem;
+    line-height: 2.1;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .otaku-highlights {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .otaku-item {
+    padding: 1.2rem;
+    border: 1px solid rgba(181,101,255,0.2);
+    background: rgba(181,101,255,0.04);
+    transition: all 0.3s;
+  }
+
+  .otaku-item:hover {
+    border-color: rgba(181,101,255,0.5);
+    background: rgba(181,101,255,0.08);
+  }
+
+  .otaku-item-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.9rem;
+    color: #B565FF;
+    margin-bottom: 0.4rem;
+    font-weight: 700;
+  }
+
+  .otaku-item p {
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ── DEEP INFO ── */
+  #deep-info {
+    background: var(--deep-navy);
+    padding: 0 2rem 6rem;
+  }
+
+  .deep-info-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .info-block {
+    padding: 2rem;
+    border-top: 2px solid var(--crimson);
+  }
+
+  .info-block-num {
+    font-size: 3rem;
+    font-weight: 700;
+    color: rgba(200,16,46,0.15);
+    font-family: 'Noto Serif JP', serif;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .info-block-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.05rem;
+    color: white;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+  }
+
+  .info-block-text {
+    font-size: 0.78rem;
+    line-height: 2;
+    color: var(--muted);
+  }
+
+  /* ── 2050 VISION ── */
+  #vision-2050 {
+    background: linear-gradient(to bottom, #0A0518, var(--deep-navy));
+    padding: 6rem 2rem;
+    text-align: center;
+  }
+
+  .vision-year {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(6rem, 20vw, 14rem);
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(0,255,209,0.2);
+    display: block;
+    line-height: 1;
+    margin-bottom: -1rem;
+  }
+
+  .vision-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: var(--neon-teal);
+    margin-bottom: 2rem;
+  }
+
+  .vision-grid {
+    max-width: 900px;
+    margin: 3rem auto 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(0,255,209,0.1);
+  }
+
+  .vision-item {
+    background: var(--deep-navy);
+    padding: 2rem 1.5rem;
+    transition: background 0.3s;
+  }
+  .vision-item:hover { background: rgba(0,255,209,0.05); }
+
+  .vision-item-icon {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.8rem;
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  .vision-item-title {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--neon-teal);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+
+  .vision-item-text {
+    font-size: 0.72rem;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+
+  /* ── PHILOSOPHY SECTION ── */
+  #philosophy {
+    background: var(--mid-navy);
+    padding: 6rem 2rem;
+  }
+
+  .philosophy-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .bushido-quote {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1.5rem, 4vw, 2.8rem);
+    font-weight: 400;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+
+  .bushido-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.2rem;
+    color: var(--crimson);
+    margin-bottom: 3rem;
+    display: block;
+    opacity: 0.8;
+  }
+
+  .philosophy-pillars {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: rgba(200,16,46,0.15);
+    margin-top: 3rem;
+  }
+
+  .pillar {
+    background: var(--mid-navy);
+    padding: 1.5rem 0.5rem;
+    text-align: center;
+    transition: background 0.3s;
+  }
+  .pillar:hover { background: rgba(200,16,46,0.08); }
+
+  .pillar-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.3rem;
+    color: var(--crimson);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .pillar-en {
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── TOURISM ── */
+  #tourism {
+    padding: 0 2rem 6rem;
+    background: var(--deep-navy);
+  }
+
+  .tourism-row {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .tourism-card {
+    position: relative;
+    padding: 2rem 1.5rem;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: var(--mid-navy);
+    transition: all 0.3s;
+    overflow: hidden;
+  }
+
+  .tourism-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--crimson);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+
+  .tourism-card:hover {
+    border-color: rgba(200,16,46,0.25);
+    transform: translateY(-4px);
+  }
+  .tourism-card:hover::before { transform: scaleX(1); }
+
+  .tourism-icon {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 1rem;
+    color: var(--gold);
+  }
+
+  .tourism-place {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.3rem;
+  }
+
+  .tourism-pref {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--crimson);
+    margin-bottom: 0.8rem;
+  }
+
+  .tourism-desc {
+    font-size: 0.75rem;
+    line-height: 1.9;
+    color: var(--muted);
+  }
+
+  /* ── CUISINE ── */
+  #cuisine {
+    background: linear-gradient(to bottom, #050510, var(--mid-navy));
+    padding: 0 2rem 6rem;
+  }
+
+  .cuisine-strip {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .cuisine-item {
+    padding: 2.5rem 1.5rem;
+    background: var(--deep-navy);
+    text-align: center;
+    transition: background 0.3s;
+    cursor: pointer;
+  }
+  .cuisine-item:hover { background: rgba(212,175,55,0.05); }
+
+  .cuisine-kanji {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 2.8rem;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.8rem;
+    transition: transform 0.3s;
+  }
+  .cuisine-item:hover .cuisine-kanji { transform: scale(1.1); }
+
+  .cuisine-name {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.3rem;
+  }
+
+  .cuisine-desc {
+    font-size: 0.7rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(200,16,46,0.2);
+    padding: 4rem 3rem 3rem;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .footer-brand {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 1rem;
+  }
+
+  .footer-brand span { color: var(--crimson); }
+
+  .footer-desc {
+    font-size: 0.76rem;
+    line-height: 2;
+    color: var(--muted);
+    max-width: 280px;
+  }
+
+  .footer-col h4 {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 0.6rem; }
+  .footer-links a {
+    font-size: 0.76rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: white; }
+
+  .footer-bottom {
+    max-width: 1100px;
+    margin: 3rem auto 0;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-copy {
+    font-size: 0.68rem;
+    color: rgba(136,153,187,0.5);
+  }
+
+  .footer-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.9rem;
+    color: rgba(200,16,46,0.4);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .map-container { grid-template-columns: 1fr; }
+    .culture-grid { grid-template-columns: 1fr; }
+    .culture-cell:first-child { aspect-ratio: 16/9; grid-column: span 1; }
+    .future-grid { grid-template-columns: 1fr; }
+    .vision-grid { grid-template-columns: repeat(2, 1fr); }
+    .philosophy-pillars { grid-template-columns: repeat(4, 1fr); }
+    .deep-info-grid { grid-template-columns: 1fr; }
+    .tourism-row { grid-template-columns: repeat(2, 1fr); }
+    .cuisine-strip { grid-template-columns: repeat(3, 1fr); }
+    .otaku-showcase { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  }
+
+  @media (max-width: 600px) {
+    .hero-title { font-size: 3rem; }
+    .vision-grid { grid-template-columns: 1fr; }
+    .philosophy-pillars { grid-template-columns: repeat(4, 1fr); }
+    .tourism-row { grid-template-columns: 1fr; }
+    .cuisine-strip { grid-template-columns: repeat(2, 1fr); }
+    .otaku-highlights { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr; }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── GLOWING DIVIDER ── */
+  .glow-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--crimson), transparent);
+    margin: 0;
+    opacity: 0.4;
+  }
+
+  /* horizontal kanji decoration */
+  .kanji-deco {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.9rem;
+    color: rgba(200,16,46,0.25);
+    letter-spacing: 0.6em;
+    text-align: center;
+    display: block;
+    padding: 1rem 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── STARFIELD ── -->
+<div id="starfield"></div>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#hero" class="nav-logo">日本のカルチャー</a>
+  <ul class="nav-links">
+    <li><a href="#map-section">Regions</a></li>
+    <li><a href="#culture">Culture</a></li>
+    <li><a href="#festivals">Festivals</a></li>
+    <li><a href="#future">Future</a></li>
+    <li><a href="#otaku">Otaku</a></li>
+    <li><a href="#tourism">Tourism</a></li>
+  </ul>
+  <div class="flag-icon"><div class="circle"></div></div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="kanji-watermark">日本</div>
+  <p class="hero-tagline">A Digital Journey Through Japan</p>
+  <h1 class="hero-title">Nihonnoculture</h1>
+  <p class="hero-subtitle-jp">日本のカルチャー</p>
+  <p class="hero-desc">
+    A grand digital encyclopedia and immersive showcase blending Japan's timeless traditions with its breathtaking vision for the future. Walk through a digital museum, a futuristic cityscape, and a cultural classroom all at once.
+  </p>
+  <div class="hero-cta">
+    <a href="#map-section" class="btn-primary">Explore Japan</a>
+    <a href="#culture" class="btn-outline">Discover Culture</a>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span class="scroll-text">Scroll</span>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ── MAP ── -->
+<section id="map-section">
+  <div class="section-header reveal">
+    <span class="section-kicker">47 Prefectures</span>
+    <h2 class="section-title">Explore the Regions</h2>
+    <div class="section-line"></div>
+    <p class="section-intro">From the snowy peaks of Hokkaido to the tropical shores of Okinawa — each prefecture holds a unique world of culture, history, and innovation.</p>
+  </div>
+
+  <div class="map-container reveal">
+    <div class="map-visual">
+      <svg class="japan-map-svg" viewBox="0 0 300 500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <!-- Stylized Japan islands -->
+        <!-- Hokkaido -->
+        <g class="prefecture-btn" onclick="selectPref('hokkaido')">
+          <ellipse cx="200" cy="60" rx="65" ry="40" fill="rgba(200,16,46,0.12)" stroke="rgba(200,16,46,0.4)" stroke-width="1"/>
+          <text x="200" y="65" text-anchor="middle" fill="rgba(200,16,46,0.7)" font-size="10" font-family="Noto Serif JP">北海道</text>
+        </g>
+        <!-- Honshu -->
+        <g class="prefecture-btn" onclick="selectPref('tokyo')">
+          <path d="M140 120 Q120 150 110 200 Q115 260 130 300 Q160 340 190 320 Q220 290 230 250 Q240 200 220 160 Q200 130 170 120 Z" fill="rgba(200,16,46,0.08)" stroke="rgba(200,16,46,0.3)" stroke-width="1"/>
+          <text x="175" y="220" text-anchor="middle" fill="rgba(200,16,46,0.6)" font-size="9" font-family="Noto Serif JP">本州</text>
+        </g>
+        <!-- Tokyo marker -->
+        <g class="prefecture-btn" onclick="selectPref('tokyo')">
+          <circle cx="185" cy="200" r="5" fill="rgba(200,16,46,0.5)" filter="url(#glow)"/>
+          <circle cx="185" cy="200" r="10" fill="none" stroke="rgba(200,16,46,0.3)" stroke-width="1">
+            <animate attributeName="r" from="5" to="20" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" from="0.5" to="0" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <text x="195" y="198" fill="rgba(255,255,255,0.6)" font-size="8" font-family="Noto Serif JP">東京</text>
+        </g>
+        <!-- Kyoto marker -->
+        <g class="prefecture-btn" onclick="selectPref('kyoto')">
+          <circle cx="160" cy="240" r="4" fill="rgba(212,175,55,0.7)" filter="url(#glow)"/>
+          <text x="168" y="245" fill="rgba(212,175,55,0.7)" font-size="7" font-family="Noto Serif JP">京都</text>
+        </g>
+        <!-- Shikoku -->
+        <g>
+          <ellipse cx="155" cy="340" rx="35" ry="22" fill="rgba(200,16,46,0.06)" stroke="rgba(200,16,46,0.2)" stroke-width="1"/>
+          <text x="155" y="344" text-anchor="middle" fill="rgba(200,16,46,0.4)" font-size="7" font-family="Noto Serif JP">四国</text>
+        </g>
+        <!-- Kyushu -->
+        <g class="prefecture-btn" onclick="selectPref('kyushu')">
+          <ellipse cx="120" cy="375" rx="38" ry="45" fill="rgba(200,16,46,0.07)" stroke="rgba(200,16,46,0.25)" stroke-width="1"/>
+          <text x="120" y="378" text-anchor="middle" fill="rgba(200,16,46,0.45)" font-size="8" font-family="Noto Serif JP">九州</text>
+        </g>
+        <!-- Okinawa -->
+        <g class="prefecture-btn" onclick="selectPref('okinawa')">
+          <circle cx="75" cy="465" r="12" fill="rgba(0,255,209,0.08)" stroke="rgba(0,255,209,0.3)" stroke-width="1"/>
+          <text x="75" y="482" text-anchor="middle" fill="rgba(0,255,209,0.5)" font-size="7" font-family="Noto Serif JP">沖縄</text>
+        </g>
+        <!-- Sea of Japan label -->
+        <text x="60" y="250" fill="rgba(255,255,255,0.08)" font-size="9" font-style="italic" font-family="Noto Serif JP">Sea of Japan</text>
+        <!-- Pacific label -->
+        <text x="240" y="300" fill="rgba(255,255,255,0.08)" font-size="9" font-style="italic" font-family="Noto Serif JP">Pacific</text>
+      </svg>
+    </div>
+
+    <div class="prefecture-cards" id="prefectureCards">
+      <div class="prefecture-card active" data-id="hokkaido">
+        <div class="pref-name">Hokkaido</div>
+        <div class="pref-jp">北海道</div>
+        <div class="pref-tags">
+          <span class="pref-tag">Nature</span>
+          <span class="pref-tag">Skiing</span>
+          <span class="pref-tag">Dairy</span>
+          <span class="pref-tag">Eco-Tourism</span>
+        </div>
+        <div class="pref-desc">Japan's northernmost island is a land of dramatic seasons — powder snow in winter, vibrant blooms in spring, and vast untouched wilderness year-round. The Sapporo Snow Festival draws millions with colossal ice sculptures. Hokkaido produces over half of Japan's dairy, and its fresh cheeses and butter are legendary. Future plans focus on renewable energy farms, smart eco-tourism, and hydrogen infrastructure, positioning Hokkaido as Japan's green frontier.</div>
+      </div>
+
+      <div class="prefecture-card" data-id="tokyo">
+        <div class="pref-name">Tokyo</div>
+        <div class="pref-jp">東京</div>
+        <div class="pref-tags">
+          <span class="pref-tag">Metropolis</span>
+          <span class="pref-tag">Anime</span>
+          <span class="pref-tag">Robotics</span>
+          <span class="pref-tag">SmartCity</span>
+        </div>
+        <div class="pref-desc">The beating heart of Japan and one of Earth's most electrifying cities. From the serenity of Shinto shrines to the neon chaos of Shibuya Crossing, Tokyo pulses with contradiction and brilliance. Akihabara is the global capital of otaku culture, while Roppongi houses world-class art. Future Tokyo is a fully integrated smart city — AI-managed traffic, holographic entertainment, and vertical farms in skyscrapers. It's the city where the past and 2050 coexist on the same block.</div>
+      </div>
+
+      <div class="prefecture-card" data-id="kyoto">
+        <div class="pref-name">Kyoto</div>
+        <div class="pref-jp">京都</div>
+        <div class="pref-tags">
+          <span class="pref-tag">Temples</span>
+          <span class="pref-tag">Geisha</span>
+          <span class="pref-tag">Tea Ceremony</span>
+          <span class="pref-tag">Heritage</span>
+        </div>
+        <div class="pref-desc">Japan's ancient capital preserves the soul of the nation in amber. Over 1,600 Buddhist temples and 400 Shinto shrines dot the landscape. Gion district harbors the last practicing maiko and geiko, keepers of centuries-old arts. The Arashiyama bamboo grove and Fushimi Inari's thousand vermilion gates are among the world's most photographed scenes. Future Kyoto balances heritage preservation with sustainable tourism powered by green technology.</div>
+      </div>
+
+      <div class="prefecture-card" data-id="okinawa">
+        <div class="pref-name">Okinawa</div>
+        <div class="pref-jp">沖縄</div>
+        <div class="pref-tags">
+          <span class="pref-tag">Tropical</span>
+          <span class="pref-tag">Ryukyu Culture</span>
+          <span class="pref-tag">Beaches</span>
+          <span class="pref-tag">Marine Life</span>
+        </div>
+        <div class="pref-desc">A tropical paradise where the azure Pacific meets a unique Ryukyu kingdom heritage distinct from mainland Japan. Okinawans are among the world's longest-lived people, their longevity linked to diet, community, and the philosophy of ikigai. The coral reefs of Kerama Islands are among the world's finest dive sites. Future Okinawa is pioneering marine conservation initiatives and sustainable eco-tourism, protecting its extraordinary natural heritage for generations to come.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<span class="kanji-deco">文化　芸術　伝統　革新　未来</span>
+<div class="glow-divider"></div>
+
+<!-- ── CULTURE ── -->
+<section id="culture">
+  <div class="section-header reveal">
+    <span class="section-kicker">Cultural Tapestry</span>
+    <h2 class="section-title">The Many Faces of Japan</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="culture-grid reveal">
+    <div class="culture-cell">
+      <div class="culture-bg">茶</div>
+      <div class="culture-content">
+        <span class="culture-tag tag-red">Traditional Arts</span>
+        <h3 class="culture-title">Tea Ceremony & Traditional Arts</h3>
+        <p class="culture-text">The Japanese tea ceremony — chanoyu — is a choreographed ritual of preparing and presenting matcha tea rooted in Zen Buddhist principles. Every movement is deliberate; every utensil a work of art. Alongside it flourish ikebana (flower arranging as meditation), calligraphy that transforms language into visual poetry, and kabuki theater with its dramatic makeup and centuries-old repertoire. These arts are living philosophies, not museum pieces.</p>
+      </div>
+    </div>
+
+    <div class="culture-cell">
+      <div class="culture-bg">侍</div>
+      <div class="culture-content">
+        <span class="culture-tag tag-red">Samurai Legacy</span>
+        <h3 class="culture-title">Bushido & the Samurai Spirit</h3>
+        <p class="culture-text">The samurai code of Bushido — justice, courage, benevolence, respect, honesty, honor, loyalty — did not die with the feudal era. It lives on in corporate Japan's work ethic, in the discipline of martial arts, and in the quiet dignity of everyday Japanese conduct. The legacy of the sword-bearing warrior class permeates language, cinema, and the national psyche.</p>
+      </div>
+    </div>
+
+    <div class="culture-cell">
+      <div class="culture-bg">鳥居</div>
+      <div class="culture-content">
+        <span class="culture-tag tag-green">Religion</span>
+        <h3 class="culture-title">Shinto & Zen Buddhism</h3>
+        <p class="culture-text">Japan's spiritual landscape is one of harmonious coexistence — Shinto shrines and Buddhist temples often share sacred hillsides. Shinto honors kami (spirits) in all of nature; Buddhism offers a path to enlightenment. Zen gardens, raked gravel, and strategic stones create meditative microcosms. Most Japanese embrace elements of both, blending them naturally across the stages of life.</p>
+      </div>
+    </div>
+
+    <div class="culture-cell">
+      <div class="culture-bg">字</div>
+      <div class="culture-content">
+        <span class="culture-tag tag-blue">Language</span>
+        <h3 class="culture-title">Language Evolution</h3>
+        <p class="culture-text">Japanese is one of the world's most complex writing systems — three scripts coexist: kanji (Chinese-origin characters), hiragana, and katakana. The language carries layers of politeness registers that shift based on social hierarchy. Today, Japanese language evolves at lightning speed: from kanji to text-speak to globally adopted emoji (invented in Japan), the language continues its extraordinary journey of reinvention.</p>
+      </div>
+    </div>
+
+    <div class="culture-cell">
+      <div class="culture-bg">建</div>
+      <div class="culture-content">
+        <span class="culture-tag tag-blue">Architecture</span>
+        <h3 class="culture-title">From Pagodas to Skyscrapers</h3>
+        <p class="culture-text">Japanese architecture embodies the tension between tradition and futurism. Ancient wooden pagodas engineered to survive earthquakes stand beside Kengo Kuma's organic contemporary structures and the glass-and-steel towers of Tokyo's skyline. Machiya townhouses of Kyoto sit streets away from brutalist concrete blocks. Japan's built environment is a layered historical archive, constantly under renovation.</p>
+      </div>
+    </div>
+
+    <div class="culture-cell">
+      <div class="culture-bg">経</div>
+      <div class="culture-content">
+        <span class="culture-tag tag-blue">Economy</span>
+        <h3 class="culture-title">Economic Powerhouses</h3>
+        <p class="culture-text">Japan is home to companies that have shaped the global imagination: Toyota pioneered lean manufacturing and hybrid vehicles. Sony transformed consumer electronics and entertainment. Nintendo invented modern gaming culture. SoftBank became a titan of global tech investment. These corporations carry Japanese values of precision, innovation, and long-term thinking onto the world stage, making Japan's economy the third largest on Earth.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ── FESTIVALS ── -->
+<section id="festivals">
+  <div class="section-header reveal">
+    <span class="section-kicker">Living Calendar</span>
+    <h2 class="section-title">Festivals of Japan</h2>
+    <div class="section-line"></div>
+    <p class="section-intro">Japan's festivals are living museums of heritage — a kaleidoscope of tradition, spirituality, and community spread across every season.</p>
+  </div>
+
+  <div class="festival-timeline reveal">
+    <div class="festival-item">
+      <div class="festival-month">March – May</div>
+      <div class="festival-name">Hanami</div>
+      <div class="festival-jp">花見</div>
+      <p class="festival-desc">Cherry blossom viewing is Japan's most beloved seasonal ritual. As sakura trees burst into pale pink bloom, entire families, friends, and strangers gather beneath the flowers for picnics, singing, and quiet contemplation. The ephemeral beauty of blossoms — here for one week, then gone — embodies the Japanese concept of mono no aware: the bittersweet awareness of impermanence. Parks like Ueno in Tokyo and the Philosopher's Path in Kyoto transform into sea of pink.</p>
+    </div>
+
+    <div class="festival-item">
+      <div class="festival-month">July</div>
+      <div class="festival-name">Gion Matsuri</div>
+      <div class="festival-jp">祇園祭</div>
+      <p class="festival-desc">Dating to the 9th century, Kyoto's Gion Matsuri is Japan's grandest festival. For the entire month of July, the city fills with elaborate floats (yamaboko) towering several stories high, traditional music, and kimono-clad participants. The Yamaboko Junko procession on July 17th is a UNESCO Intangible Cultural Heritage — massive wooden floats weighing up to 12 tons, decorated with antique tapestries, navigate ancient streets in a centuries-old sequence.</p>
+    </div>
+
+    <div class="festival-item">
+      <div class="festival-month">July</div>
+      <div class="festival-name">Tanabata</div>
+      <div class="festival-jp">七夕</div>
+      <p class="festival-desc">The Star Festival celebrates the annual meeting of celestial lovers Orihime and Hikoboshi across the Milky Way. Colorful paper streamers and tanzaku wish-cards adorn bamboo branches nationwide. Sendai's Tanabata Matsuri is the most spectacular, with monumental decorations transforming the shopping arcades into rivers of color. The festival blends Chinese astronomy, Japanese poetry, and the universal human longing to make wishes under summer stars.</p>
+    </div>
+
+    <div class="festival-item">
+      <div class="festival-month">August</div>
+      <div class="festival-name">Obon</div>
+      <div class="festival-jp">お盆</div>
+      <p class="festival-desc">Obon is Japan's festival of ancestral reunion — a Buddhist observance when the spirits of deceased relatives return to the world of the living. Families clean graves, light incense, and perform Bon Odori dances together in communal circles. Paper lanterns are floated on rivers to guide spirits back. It is at once a time of joy and melancholy, of homecoming and farewell — the festival most central to Japanese cultural identity.</p>
+    </div>
+
+    <div class="festival-item">
+      <div class="festival-month">February</div>
+      <div class="festival-name">Sapporo Snow Festival</div>
+      <div class="festival-jp">さっぽろ雪まつり</div>
+      <p class="festival-desc">Since 1950, Hokkaido's capital transforms into a frozen wonderland for seven days each February. The festival features over 200 snow and ice sculptures — from intricate miniatures to full-scale replicas of world landmarks, some reaching five stories tall. Teams from over 30 countries compete in the international sculpture contest. Over two million visitors brave the sub-zero temperatures to witness this extraordinary intersection of winter artistry and communal creativity.</p>
+    </div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ── FUTURE ── -->
+<section id="future">
+  <div class="section-header reveal">
+    <span class="section-kicker">Tomorrow's Japan</span>
+    <h2 class="section-title">Future Life in Japan</h2>
+    <div class="section-line"></div>
+    <p class="section-intro">Japan's future is a fusion of cyberpunk dreams and practical genius — a nation engineering tomorrow while honoring yesterday.</p>
+  </div>
+
+  <div class="future-grid reveal">
+    <div class="future-card" style="--glow-color: rgba(0,255,209,0.04);">
+      <span class="future-icon">🤖</span>
+      <div class="future-title">Robotics & AI</div>
+      <p class="future-desc">Japan leads the world in humanoid robotics. Pepper, ASIMO, and a new generation of elder-care robots are redefining human-machine relationships. By 2035, robots are projected to fill critical roles in elder care, hospitality, and disaster response — helping Japan address its demographic challenge with technological ingenuity.</p>
+      <div class="future-stat">
+        <span class="future-num">47%</span>
+        <span class="future-label">of elder care aided by robots by 2035</span>
+      </div>
+    </div>
+
+    <div class="future-card" style="--glow-color: rgba(63,164,255,0.04);">
+      <span class="future-icon">🏙️</span>
+      <div class="future-title">Smart Cities</div>
+      <p class="future-desc">Toyota's Woven City — a living laboratory built at the base of Mount Fuji — is testing AI traffic management, hydrogen energy, and autonomous vehicles in a real urban environment. Osaka's smart housing projects integrate IoT sensors into daily life. Tokyo's AI-driven infrastructure monitors everything from subway crowding to earthquake early warnings in real time.</p>
+      <div class="future-stat">
+        <span class="future-num">₂₀₅₀</span>
+        <span class="future-label">Carbon-neutral target for all major cities</span>
+      </div>
+    </div>
+
+    <div class="future-card" style="--glow-color: rgba(181,101,255,0.04);">
+      <span class="future-icon">🚀</span>
+      <div class="future-title">Space Exploration</div>
+      <p class="future-desc">JAXA's ambitions stretch beyond Earth's atmosphere. The Hayabusa2 mission successfully retrieved asteroid samples from 300 million kilometers away — a world first. Japan's lunar exploration program aims to land astronauts on the Moon by the early 2030s, and plans for asteroid mining partnerships with NASA are actively in development. Japan's space future is both pioneering and collaborative.</p>
+      <div class="future-stat">
+        <span class="future-num">2032</span>
+        <span class="future-label">Target year for Japanese lunar landing</span>
+      </div>
+    </div>
+
+    <div class="future-card" style="--glow-color: rgba(0,255,209,0.04);">
+      <span class="future-icon">⚡</span>
+      <div class="future-title">Sustainable Living</div>
+      <p class="future-desc">Japan is betting its energy future on hydrogen. Toyota's Mirai fuel cell vehicle leads a hydrogen mobility revolution, while entire neighborhoods in Kitakyushu are powered by hydrogen grids. Solar panels blend with traditional roofscapes; vertical farms rise in abandoned warehouses. Japan's path to carbon neutrality is paved with extraordinary engineering and cultural adaptability.</p>
+      <div class="future-stat">
+        <span class="future-num">3×</span>
+        <span class="future-label">Increase in renewable capacity by 2030</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ── PHILOSOPHY ── -->
+<section id="philosophy">
+  <div class="philosophy-inner reveal">
+    <span class="section-kicker" style="display:block; text-align:center; margin-bottom:1rem;">Code of Honor</span>
+    <blockquote class="bushido-quote">"The way of the samurai is found in death — and in the total commitment to life that comes from accepting this."</blockquote>
+    <span class="bushido-jp">武士道</span>
+    <p style="font-size:0.82rem; line-height:2; color:var(--muted); max-width:650px; margin:0 auto 3rem;">Bushido — the Way of the Warrior — is not merely historical philosophy. Its eight virtues continue to shape Japanese culture, from the discipline of corporate salaryman culture to the perfectionism of a sushi chef devoting decades to rice technique. It is the invisible architecture of Japanese society.</p>
+
+    <div class="philosophy-pillars">
+      <div class="pillar"><span class="pillar-jp">義</span><span class="pillar-en">Justice</span></div>
+      <div class="pillar"><span class="pillar-jp">勇</span><span class="pillar-en">Courage</span></div>
+      <div class="pillar"><span class="pillar-jp">仁</span><span class="pillar-en">Benevolence</span></div>
+      <div class="pillar"><span class="pillar-jp">礼</span><span class="pillar-en">Respect</span></div>
+      <div class="pillar"><span class="pillar-jp">誠</span><span class="pillar-en">Honesty</span></div>
+      <div class="pillar"><span class="pillar-jp">名誉</span><span class="pillar-en">Honor</span></div>
+      <div class="pillar"><span class="pillar-jp">忠</span><span class="pillar-en">Loyalty</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ── OTAKU ── -->
+<section id="otaku">
+  <div class="section-header reveal">
+    <span class="section-kicker">Pop Culture</span>
+    <h2 class="section-title">Otaku Culture</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="otaku-showcase reveal">
+    <div class="otaku-text">
+      <h3>Japan's Greatest Cultural Export</h3>
+      <p>Otaku culture — rooted in obsessive fandom for anime, manga, and video games — has grown from a niche subculture into a global phenomenon worth billions. What began in Akihabara's back-alley shops now shapes global youth identity, fashion, language, and art.</p>
+      <p>The word "otaku" itself has been reclaimed: once a term of derision, it is now worn with pride by millions worldwide. Comiket, held twice yearly in Tokyo, attracts over 700,000 attendees — one of the largest gatherings on Earth — trading self-published doujinshi (fan comics) and celebrating creative obsession.</p>
+      <p>Japan's animation industry produces over 60% of the world's animated content. From Studio Ghibli's transcendent films to the global dominance of Shonen Jump properties, Japanese storytelling has conquered the world one frame at a time.</p>
+    </div>
+
+    <div class="otaku-highlights">
+      <div class="otaku-item">
+        <div class="otaku-item-title">Anime</div>
+        <p>Over 13,000 anime titles produced since 1917. Dragon Ball, Naruto, One Piece, and Demon Slayer are among history's most-watched series. The global anime market exceeds $25 billion annually.</p>
+      </div>
+      <div class="otaku-item">
+        <div class="otaku-item-title">Manga</div>
+        <p>Japan publishes approximately 1.5 billion manga volumes each year. The medium spans every genre imaginable — from children's adventures to philosophical sci-fi. Weekly Shonen Jump has run since 1968.</p>
+      </div>
+      <div class="otaku-item">
+        <div class="otaku-item-title">Akihabara</div>
+        <p>Tokyo's "Electric Town" is the global shrine of otaku culture. Multi-story electronics shops, maid cafés, gashapon machines, and rare figure collectors coexist in one dizzying, neon-lit district.</p>
+      </div>
+      <div class="otaku-item">
+        <div class="otaku-item-title">Video Games</div>
+        <p>Nintendo, Sega, Capcom, Square Enix — Japan invented modern gaming culture. Super Mario, The Legend of Zelda, Final Fantasy, and Pokemon are among history's most beloved franchises.</p>
+      </div>
+      <div class="otaku-item">
+        <div class="otaku-item-title">Cosplay</div>
+        <p>The art of costume play — dressing as beloved characters — emerged from Japan's Comiket conventions and now spans every continent. World Cosplay Summit draws competitors from 40+ nations to Nagoya.</p>
+      </div>
+      <div class="otaku-item">
+        <div class="otaku-item-title">J-Pop & Vocaloid</div>
+        <p>Japanese pop music exports from idol groups to Hatsune Miku — a virtual holographic singer with millions of fans worldwide. J-pop's structured idol industry is a cultural phenomenon unlike any other.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ── CUISINE ── -->
+<section id="cuisine">
+  <div class="section-header reveal">
+    <span class="section-kicker">Culinary Arts</span>
+    <h2 class="section-title">The Way of Japanese Cuisine</h2>
+    <div class="section-line"></div>
+    <p class="section-intro">Japanese cuisine — awarded more Michelin stars than any other nation — elevates food to philosophy. Every dish is a meditation on seasonality, technique, and reverence for ingredients.</p>
+  </div>
+
+  <div class="cuisine-strip reveal">
+    <div class="cuisine-item">
+      <span class="cuisine-kanji">寿</span>
+      <div class="cuisine-name">Sushi</div>
+      <p class="cuisine-desc">The marriage of vinegared rice and the freshest fish — an art form requiring years of apprenticeship. Jiro Ono's Sukiyabashi Jiro earned three Michelin stars serving only omakase.</p>
+    </div>
+    <div class="cuisine-item">
+      <span class="cuisine-kanji">麺</span>
+      <div class="cuisine-name">Ramen</div>
+      <p class="cuisine-desc">From Sapporo's miso-based bowls to Hakata's rich tonkotsu — each region guards its ramen identity with fierce pride. A global obsession born from Chinese noodle influences and Japanese perfectionism.</p>
+    </div>
+    <div class="cuisine-item">
+      <span class="cuisine-kanji">天</span>
+      <div class="cuisine-name">Tempura</div>
+      <p class="cuisine-desc">Introduced by Portuguese missionaries in the 16th century and perfected by Japanese chefs over centuries. The ideal tempura batter is whisked in ice water moments before frying, creating a gossamer-light shell.</p>
+    </div>
+    <div class="cuisine-item">
+      <span class="cuisine-kanji">和</span>
+      <div class="cuisine-name">Wagashi</div>
+      <p class="cuisine-desc">Traditional Japanese confections crafted to reflect the current season — cherry blossoms in spring, autumn leaves in October. Wagashi accompanies the tea ceremony, and each piece is as much sculpture as food.</p>
+    </div>
+    <div class="cuisine-item">
+      <span class="cuisine-kanji">酒</span>
+      <div class="cuisine-name">Sake</div>
+      <p class="cuisine-desc">Japan's national drink, brewed from rice with centuries of tradition. Over 1,800 breweries produce sake ranging from dry junmai to floral ginjo varieties. Sake tasting has become a global sommelier discipline.</p>
+    </div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ── DEEP INFO ── -->
+<section id="deep-info">
+  <div class="section-header reveal">
+    <span class="section-kicker">In Depth</span>
+    <h2 class="section-title">Japan: The Full Picture</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="deep-info-grid reveal">
+    <div class="info-block">
+      <div class="info-block-num">01</div>
+      <div class="info-block-title">Work Culture & Karōshi</div>
+      <p class="info-block-text">Japan's corporate culture is defined by loyalty, collective harmony, and extraordinary dedication. The concept of karōshi — death by overwork — became a recognized social crisis in the 1980s, spurring decades of reform. Today, companies balance traditional work ethics with new policies for work-life harmony. The salaryman archetype — suit-clad, loyal, self-sacrificing — remains both admired and questioned in modern Japan.</p>
+    </div>
+
+    <div class="info-block">
+      <div class="info-block-num">02</div>
+      <div class="info-block-title">Education System</div>
+      <p class="info-block-text">Japan's education system is among the world's most rigorous and egalitarian. Students learn discipline, group responsibility, and academic excellence from nursery school onward. High school students often attend juku (cram schools) for extra preparation. University entrance exams are fierce national competitions. The result: extremely high literacy rates, strong STEM performance, and a workforce renowned for precision and commitment to craft.</p>
+    </div>
+
+    <div class="info-block">
+      <div class="info-block-num">03</div>
+      <div class="info-block-title">Digital Society</div>
+      <p class="info-block-text">Japan is paradoxically both a global tech leader and a holdout of analog culture — cash remains dominant even as contactless payments expand. Holographic concerts featuring virtual idols pack arenas. VR tourism allows global visitors to experience Mount Fuji from their homes. The government's Society 5.0 initiative envisions a fully connected future where AI solves social challenges without sacrificing human connection.</p>
+    </div>
+
+    <div class="info-block">
+      <div class="info-block-num">04</div>
+      <div class="info-block-title">Wabi-Sabi & Aesthetics</div>
+      <p class="info-block-text">Japanese aesthetics are shaped by profound philosophical concepts: wabi-sabi finds beauty in imperfection and impermanence. Ikigai — "reason for being" — guides millions to find meaning at the intersection of passion, mission, vocation, and profession. Ma (間) is the art of the meaningful pause, the intentional empty space in architecture, music, and conversation. These concepts now influence global design, psychology, and lifestyle culture.</p>
+    </div>
+
+    <div class="info-block">
+      <div class="info-block-num">05</div>
+      <div class="info-block-title">Global Cultural Impact</div>
+      <p class="info-block-text">Japan's soft power is extraordinary. Anime and manga have created Japan's most internationally recognized cultural export, with dedicated fan communities on every continent. Japanese food culture has spread worldwide — there are more ramen restaurants in New York now than pizza parlors in Tokyo. Fashion, architecture, product design, and industrial philosophy all bear Japan's fingerprints. From Marie Kondo's tidying revolution to the global embrace of matcha lattes, Japan shapes the world subtly and constantly.</p>
+    </div>
+
+    <div class="info-block">
+      <div class="info-block-num">06</div>
+      <div class="info-block-title">Nature & Conservation</div>
+      <p class="info-block-text">Japan's relationship with nature is spiritual as much as ecological. Shinto teaches that kami inhabit mountains, rivers, and ancient trees. Japan has 29 UNESCO World Heritage Sites, including the ancient forests of Yakushima and the historic villages of Shirakawa-go. Despite intense urbanization, 67% of Japan's land remains forested — one of the highest ratios in the developed world. Forest bathing (shinrin-yoku) is a recognized medical practice.</p>
+    </div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ── TOURISM ── -->
+<section id="tourism">
+  <div class="section-header reveal">
+    <span class="section-kicker">Must-Visit</span>
+    <h2 class="section-title">Icons of Japan</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="tourism-row reveal">
+    <div class="tourism-card">
+      <span class="tourism-icon">富</span>
+      <div class="tourism-place">Mount Fuji</div>
+      <div class="tourism-pref">Shizuoka / Yamanashi</div>
+      <p class="tourism-desc">Japan's highest peak and most iconic symbol — a nearly perfect volcanic cone rising to 3,776 meters. Sacred to Shinto and Buddhist traditions, Fuji is a UNESCO World Heritage Site. Each summer, 200,000 climbers make the ascent to witness sunrise above the clouds.</p>
+    </div>
+
+    <div class="tourism-card">
+      <span class="tourism-icon">鹿</span>
+      <div class="tourism-place">Nara Deer Park</div>
+      <div class="tourism-pref">Nara Prefecture</div>
+      <p class="tourism-desc">Over 1,200 wild sika deer roam freely through this ancient capital, considered sacred messengers of the gods in Shinto tradition. Visitors can feed them special deer crackers alongside some of Japan's most important Buddhist monuments, including the colossal Todai-ji temple.</p>
+    </div>
+
+    <div class="tourism-card">
+      <span class="tourism-icon">平</span>
+      <div class="tourism-place">Hiroshima Peace Memorial</div>
+      <div class="tourism-pref">Hiroshima Prefecture</div>
+      <p class="tourism-desc">The Atomic Bomb Dome stands as the world's most powerful monument to the consequences of war and the enduring hope for peace. The Peace Memorial Museum draws millions annually, bearing witness to August 6, 1945, while inspiring global disarmament conversations. Hiroshima itself is a testament to human resilience.</p>
+    </div>
+
+    <div class="tourism-card">
+      <span class="tourism-icon">宮</span>
+      <div class="tourism-place">Fushimi Inari</div>
+      <div class="tourism-pref">Kyoto Prefecture</div>
+      <p class="tourism-desc">Ten thousand vermilion torii gates wind up a sacred mountain, forming tunnels of vivid orange-red that seem to lead to another world. Dedicated to Inari, the Shinto deity of rice and prosperity, this shrine complex is Japan's most-visited destination by international tourists.</p>
+    </div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ── 2050 VISION ── -->
+<section id="vision-2050">
+  <span class="vision-year">2050</span>
+  <h2 class="vision-title reveal">Life in Japan — The Future Beckons</h2>
+  <p class="reveal" style="font-size:0.83rem; line-height:2; color:var(--muted); max-width:650px; margin:0 auto 2rem;">Imagine walking through Tokyo in 2050: AI-driven holographic billboards greet you by name, autonomous cars glide silently, humanoid robots tend to elders in sun-filled care homes. Tea ceremonies coexist with holographic concerts. Fuji still rises against the dawn — eternal, unchanged — while the city at its feet is unrecognizable from today.</p>
+
+  <div class="vision-grid reveal">
+    <div class="vision-item">
+      <span class="vision-item-icon">🌿</span>
+      <div class="vision-item-title">Carbon Neutral</div>
+      <p class="vision-item-text">Hydrogen economy in full operation. All major cities powered by renewable energy. Vertical farms in every ward.</p>
+    </div>
+    <div class="vision-item">
+      <span class="vision-item-icon">🤝</span>
+      <div class="vision-item-title">Human-Robot Society</div>
+      <p class="vision-item-text">Robots as caregivers, companions, and colleagues — integrated seamlessly while preserving human dignity and connection.</p>
+    </div>
+    <div class="vision-item">
+      <span class="vision-item-icon">🌏</span>
+      <div class="vision-item-title">Space Nation</div>
+      <p class="vision-item-text">JAXA operating lunar bases. Japanese astronauts among the first permanent Moon inhabitants. Asteroid mining underway.</p>
+    </div>
+    <div class="vision-item">
+      <span class="vision-item-icon">🎌</span>
+      <div class="vision-item-title">Culture Preserved</div>
+      <p class="vision-item-text">Ancient arts thriving alongside digital innovation. Kabuki streamed in VR. Tea ceremonies in smart tatami rooms.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Nihon<span>の</span>culture</div>
+      <p class="footer-desc">A digital encyclopedia and immersive showcase of Japan — its past, its present, and its extraordinary vision for the future. Where tradition meets tomorrow.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul class="footer-links">
+        <li><a href="#map-section">Regions & Prefectures</a></li>
+        <li><a href="#culture">Cultural Heritage</a></li>
+        <li><a href="#festivals">Festivals</a></li>
+        <li><a href="#cuisine">Cuisine</a></li>
+        <li><a href="#tourism">Tourism</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Themes</h4>
+      <ul class="footer-links">
+        <li><a href="#future">Future Technology</a></li>
+        <li><a href="#otaku">Otaku Culture</a></li>
+        <li><a href="#philosophy">Bushido Philosophy</a></li>
+        <li><a href="#vision-2050">Japan 2050</a></li>
+        <li><a href="#deep-info">In Depth</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>About</h4>
+      <ul class="footer-links">
+        <li><a href="#">About This Project</a></li>
+        <li><a href="#">Sources & Research</a></li>
+        <li><a href="#">Cultural Advisory</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Nihonnoculture — A Digital Archive of Japan</span>
+    <span class="footer-jp">日本の過去、現在、未来</span>
+  </div>
+</footer>
+
+<script>
+  // ── Starfield ──
+  const starfield = document.getElementById('starfield');
+  const starCount = 220;
+  for (let i = 0; i < starCount; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    const size = Math.random() * 2.5 + 0.5;
+    star.style.cssText = `
+      width: ${size}px;
+      height: ${size}px;
+      left: ${Math.random() * 100}%;
+      top: ${Math.random() * 100}%;
+      --dur: ${Math.random() * 4 + 2}s;
+      --delay: ${Math.random() * 5}s;
+      --min-op: ${Math.random() * 0.3 + 0.1};
+    `;
+    starfield.appendChild(star);
+  }
+
+  // ── Prefecture Selection ──
+  function selectPref(id) {
+    const cards = document.querySelectorAll('.prefecture-card');
+    cards.forEach(c => c.classList.remove('active'));
+    const target = document.querySelector(`.prefecture-card[data-id="${id}"]`);
+    if (target) {
+      target.classList.add('active');
+      target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  document.querySelectorAll('.prefecture-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.prefecture-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+    });
+  });
+
+  // ── Scroll Reveal ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── Parallax stars ──
+  window.addEventListener('scroll', () => {
+    const scroll = window.pageYOffset;
+    starfield.style.transform = `translateY(${scroll * 0.3}px)`;
+  });
+</script>
+</body>
+</html>
